@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>İdil'e Tatlı Mesajlar</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+    body {
+      margin: 0;
+      background-color: #fdf6e3;
+      font-family: 'Indie Flower', cursive;
+      overflow: hidden;
+      height: 100vh;
+      cursor: pointer;
+    }
+
+    .message {
+      position: absolute;
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      font-size: 18px;
+      color: #7B4F32;
+      animation: fadeOut 2s forwards;
+    }
+
+    @keyframes fadeOut {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-100px); }
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      transform: rotate(45deg);
+      animation: float 2s ease-out forwards;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes float {
+      0% { transform: scale(1) translateY(0); opacity: 1; }
+      100% { transform: scale(1.5) translateY(-150px); opacity: 0; }
+    }
+
+    .title-message {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 24px;
+      color: #7B4F32;
+      font-family: 'Indie Flower', cursive;
+      user-select: none;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body onclick="showMessage(event)">
+
+<audio id="bg-music" loop>
+  <source src="rises.mp3" type="audio/mpeg">
+  Tarayıcınız bu sesi desteklemiyor.
+</audio>
+
+<script>
+  const messages = [
+    "Seni seviyorum <3",
+    "Çok özel ve güzelsin",
+    "Canımm",
+    "İdil gerçekten çok tatlı",
+    "Bu evren sensiz eksik",
+    "Seninle olduğum için çok mutluyum yıldızım"
+  ];
+
+  let musicStarted = false;
+
+  function showMessage(e) {
+    // Müzik başlat (ilk tıklamada)
+    if (!musicStarted) {
+      document.getElementById('bg-music').play();
+      musicStarted = true;
+    }
+
+    // Mesaj kutusu
+    const msg = document.createElement('div');
+    msg.className = 'message';
+    msg.style.left = `${e.clientX}px`;
+    msg.style.top = `${e.clientY}px`;
+    msg.innerText = messages[Math.floor(Math.random() * messages.length)];
+    document.body.appendChild(msg);
+    setTimeout(() => msg.remove(), 2000);
+
+    // Kalp
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.style.left = `${e.clientX}px`;
+    heart.style.top = `${e.clientY}px`;
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 2000);
+  }
+</script>
+
+<div class="title-message">Hoş geldin</div>
+</body>
+</html>
